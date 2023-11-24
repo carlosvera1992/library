@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head th:replace="~{fragmentos/principal :: head}"></head>
+<style>
+	.list-group-item {
+	      padding-top: 5px;
+	      padding-bottom: 5px;
+	}
+</style>
+<body>
+	<header th:replace="~{fragmentos/principal :: header}"></header>
+
+	<div class="container  py-4">
+
+		<div class="card bg-light">
+			<div class="card-header">
+				<h3 class="text-secondary" th:text="${titulo}"></h3>
+			</div>
+			<div class="card-body">
+				<h4 class="card-title"></h4>
+
+				<ul class="list-group">
+					<li class="list-group-item"><b>Descripción: </b> <i th:text="${'Descripción: ' + producto.descripcion}"></i></li>
+					<li class="list-group-item"><b>Existencia: </b> <i th:text="${'Existencia: '} + ${#numbers.formatInteger(producto.existencia, 1, 'COMMA')}"></i></li>
+					<li class="list-group-item"><b>Precio: </b> <i th:text="${'Precio: '}  + ${#numbers.formatDecimal(producto.precio, 1, 'COMMA', 1, 'POINT')}"></i></li>
+					<li class="list-group-item"><b>Fecha último ingreso: </b> <i th:text="${'Fecha último ingreso: '} + ${#dates.format(producto.fechaUltIngreso, 'dd/MM/yyyy')}"></i></li>
+					<li class="list-group-item"><b>Categoría: </b> <i th:text="${'Categoría: ' + producto.categoria.descripcion}"></i></li>
+					<li class="list-group-item"><b>Disponible: </b> <i th:text="${'Disponible: ' + (producto.disponible ? 'Si' : 'No')}"></i></li>
+				</ul>
+
+				<div class="text-right mt-3">
+					<a href="#" onclick="history.back()" class="btn btn-sm btn-light">&laquo; regresar</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<footer th:replace="~{fragmentos/principal :: footer}"></footer>
+</body>
+
+</html>

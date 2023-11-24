@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:fragment="head">
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title th:text="${msg}"></title>
+	<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+	<link rel="stylesheet" th:href="@{/css/jquery-ui.min.css}" />
+	<link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+
+<body>
+	<header class="container-fluid" th:fragment="header">
+		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		  <a class="navbar-brand" href="#">
+		  	<img th:src="@{/img/logo_cab.png}" class="logo_cab"/>
+		  </a>
+		  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+		    <span class="navbar-toggler-icon"></span>
+		  </button>
+		
+		  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+		    <ul class="navbar-nav mr-auto">
+		      <li class="nav-item active">
+		        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+		      </li>
+		      <li class="nav-item">
+		        <a class="nav-link" href="#">Link</a>
+		      </li>
+		      <li class="nav-item dropdown">
+		        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		          Comercial
+		        </a>
+		        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+		          <a class="dropdown-item" th:href="@{/comercial/clienteslistar}">Clientes</a>
+				  <a class="dropdown-item" th:href="@{/comercial/productoslistar}">Productos</a>
+		          <a class="dropdown-item" href="#">Other item</a>
+		          <div class="dropdown-divider"></div>
+		          <a class="dropdown-item" href="#">Something else here</a>
+		        </div>
+		      </li>
+		      <li class="nav-item" >
+		        <a class="nav-link disabled" href="#">Disabled</a>
+		      </li>
+		    </ul>
+		  </div>
+		  
+		<div class="navbar navbar-right" sec:authorize="not isAuthenticated()">
+			<a th:href="@{/login}" class="btn btn-outline-info btn-sm" th:text="'Ingresar'"></a>
+		</div>
+		
+		<div class="dropdown show navbar" sec:authorize="isAuthenticated()">
+			<a class="btn btn-outline-info dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			<span sec:authentication="name"></span>
+			</a>
+		
+<!--			<div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink" >-->
+<!--			<form method="post" id="frmSalir" th:action="@{/logout}">-->
+<!--				<button class="dropdown-item" type="submit"-->
+<!--					onclick="document.querySelector('#frmSalir').submit()">Salir</button>-->
+<!--				<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>-->
+<!--			</form>-->
+<!--			</div>-->
+		</div>				  
+		  
+		</nav>
+		
+		<div class="alert alert-danger" th:if="${error != null}" th:text="${error}"></div>
+		<div class="alert alert-success" th:if="${success != null}" th:text="${success}"></div>
+		<div class="alert alert-warning" th:if="${warning != null}" th:text="${warning}"></div>
+		<div class="alert alert-info" th:if="${info != null}" th:text="${info}"></div>
+	</header>
+
+	<div class="container py-4 "></div>
+	
+	<footer class="container mt-3" th:fragment="footer">
+		<hr/>
+		<img th:src="@{/img/logo.png}" class="logo"/>
+		
+		<div class="my-2" style="font-size: 0.9em" sec:authorize="isAuthenticated()">
+			<span style="font-weight: 500">Usuario: <i sec:authentication="name"></i></span><br/>
+			<span style="font-weight: 500">Roles: <i sec:authentication="principal.authorities"></i></span><br/>
+		</div>		
+				
+		<p style="font-size: 0.9em">
+			Este proyecto fue desarrollado con Java y Spring Tools 4 por el grupo Desarrollo Web 2 <br/>
+			&copy; DW2 2023.2 Todos los derechos reservados. Términos de uso
+			y privacidad.<br/>
+		</p>
+		<script th:src="@{/js/jquery.min.js}"></script>
+		<script th:src="@{/js/bootstrap.min.js}"></script>
+		<script th:src="@{/js/popper.min.js}"></script>
+		<script th:src="@{/js/jquery-ui.min.js}"></script>
+	</footer>
+</body>
+
+</html>

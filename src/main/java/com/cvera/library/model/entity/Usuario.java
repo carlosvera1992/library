@@ -39,9 +39,6 @@ public class Usuario implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private LocalDate fechaIngreso;
 
-	@Column(name = "foto")
-	private String foto;
-
 	@NotEmpty
 	@Column(name = "identificacion")
 	private String identificacion;
@@ -100,14 +97,6 @@ public class Usuario implements Serializable {
 
 	public void setFechaIngreso(LocalDate fechaIngreso) {
 		this.fechaIngreso = fechaIngreso;
-	}
-
-	public String getFoto() {
-		return foto;
-	}
-
-	public void setFoto(String foto) {
-		this.foto = foto;
 	}
 
 	public String getTelefono() {

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+
+
+
+<head th:replace="~{plantillas/principal :: head}"></head>
+
+<body>
+	<header th:replace="~{plantillas/principal :: header}"></header>
+
+	<div class="container  py-4">
+
+		<div class="card bg-light">
+			<div class="card-header  bg-dark">
+				<h3 class="text-white" th:text="${titulo}"></h3>
+			</div>
+			<div class="card-body">
+				<h4 class="card-title"></h4>
+
+				
+
+			<div class="text-left">
+    			<a th:href="@{/biblioteca/prestamonuevo/} + ${usuario.id}" class="btn btn-xs btn-success">Hacer Prestamo</a>
+			</div>
+
+					<img class="img-thumbnail rounded d-block mx-auto" style="max-width: 15%"
+						th:src="@{'/uploads/' + ${usuario.foto}}" th:alt="${usuario.foto}"
+						th:if="${#strings.length(usuario.foto) > 0}">
+						
+                </div>
+						
+						
+						<table class="table">
+						
+					<tbody>
+					
+							
+						<tr class="table-success">
+							<td><b>Nombre y Apellidos: </b><i th:text="${usuario.nombre} + ' ' + ${usuario.apellidos}"></i></td>
+							<td> <b>Identificación: </b> <i th:text="${usuario.identificacion}"></i> </td>
+						</tr>
+						<tr class="table-warning">
+							<td><b>Correo: </b> <i th:text="${usuario.correo}"></i></td>
+							<td><b>Fecha Ingreso: </b> <i th:text="${usuario.fechaIngreso}"></i></td>
+						</tr>
+						<tr class="table-info">
+							<td><b>Teléfono: </b> <i th:text="${usuario.telefono}"></td>
+							<td><b>Activo: </b> <i><span th:if="${usuario.activo}">Activo</span><span
+										th:unless="${usuario.activo}">Inactivo</span></i> </td>
+						</tr>
+
+					</tbody>
+				</table>
+
+
+
+				<table class="table table-sm table-striped mt-4" th:if="${not #lists.isEmpty(usuario.prestamos)}">
+					<tr class="thead-dark">
+						<th>Préstamo</th>
+						<th>Estado</th>
+						<th>Ejemplar</th>
+						<th>Fecha Prestamo</th>
+						<th>Fecha Devolución</th>
+						<th>Observación</th>
+						
+					</tr>
+					<tr th:each="prest : ${usuario.prestamos}">
+						<td th:text="${prest.id}"></td>
+						<td th:text="${prest.ejemplar.id}"></td>
+						<td th:text="${prest.estado}"></td>
+						<td th:text="${prest.fechaVenta}"></td>
+						<td th:text="${prest.fechaDevolucion}"></td>
+						<td th:text="${prest.observacion}"></td>
+						
+
+					</tr>
+				</table>
+
+				<div th:text="'No hay Prestamos para el Usuario ' + ${usuario.nombre}"
+					th:if="${#lists.isEmpty(usuario.prestamos)}" class="alert alert-info mt-4"></div>
+
+
+			</div>
+		</div>
+	</div>
+	<footer th:replace="~{plantillas/principal :: footer}"></footer>
+</body>
+
+</html>

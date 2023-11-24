@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{fragmentos/principal :: head}"></head>
+<body>
+	<header th:replace="~{fragmentos/principal :: header}"></header>
+	
+	<div class="container  py-4">
+
+		<div class="card bg-light">
+			<div class="card-header">
+				<h3 class="text-secondary" th:text="${titulo}"></h3>
+			</div>
+			<div class="card-body">
+				<h4 class="card-title"  sec:authorize="hasRole('ROLE_ADMIN')">
+					<a class="btn btn-outline-primary btn-sm"
+						th:href="@{/comercial/clientenuevo}">Crear cliente</a>
+				</h4>
+				<table class="table table-striped table-sm">
+					<tr>
+						<th sec:authorize="hasRole('ROLE_USER')">Id.</th>
+						<th>Identificación</th>
+						<th>Nombre</th>
+						<th>Correo</th>
+						<th>Cap. Crédito</th>
+						<th sec:authorize="hasRole('ROLE_ADMIN')" class="text-center">Acciones</th>
+					</tr>
+					<tr th:each="cli : ${clientes}">
+						<td sec:authorize="hasRole('ROLE_USER')"><a th:href="@{/comercial/clienteconsultar/} + ${cli.id}" 
+							th:text="${#numbers.formatInteger(cli.id, 3)}" class="btn btn-outline-primary btn-sm"></a></td>
+						<td th:text="${cli.identificacion}"></td>
+						<td th:text="${cli.nombreCompleto}"></td>
+						<td th:text="${cli.correoElectronico}"></td>
+						<td th:text="${#numbers.formatInteger(cli.capacidadCredito, 1, 'POINT')}"></td>
+						<td sec:authorize="hasRole('ROLE_ADMIN')" class="text-center">
+							<a th:href="@{/comercial/facturanueva/} + ${cli.id}" class="btn btn-xs btn-outline-success">facturar</a>&nbsp;
+							<a th:href="@{/comercial/clientemodificar/} + ${cli.id}" class="btn btn-xs btn-outline-secondary">modificar</a>&nbsp;
+							<a th:href="@{/comercial/clienteeliminar/} + ${cli.id}" onclick="return confirm('Está seguro de elminar el cliente ?')"
+								class="btn btn-xs btn-outline-danger">eliminar</a>
+						</td>
+					</tr>
+				</table>
+				<nav th:replace="~{fragmentos/paginador :: pager}"></nav>
+			</div>
+		</div>
+	</div>
+	
+	<footer th:replace="~{fragmentos/principal :: footer}"></footer>
+</body>
+</html>

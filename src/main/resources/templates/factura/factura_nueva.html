@@ -1,0 +1,62 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head th:replace="~{fragmentos/principal :: head}"></head>
+<body>
+	<header th:replace="~{fragmentos/principal :: header}"></header>
+	<div class="container py-4 ">
+		<div class="card bg-light">
+			<div class="card-header">
+				<h3 class="text-secondary" th:text="${titulo}"></h3>
+			</div>
+			<div class="card-body">
+				<h4 class="card-title text-right">
+					<a class="btn btn-light" 
+						th:href="@{/comercial/clienteconsultar/} + ${factura.cliente.id}">&laquo; regresar</a>
+				</h4>
+				<form method="post" th:object="${factura}">
+
+					<div class="mb-3 row">
+						<label class="col-sm-2 col-form-label" th:text="'Cliente'"></label>
+						<div class="col-sm-6">
+							<input type="text" th:value="${factura.cliente.nombreCompleto}"
+								class="form-control" disabled="disabled"/>
+						</div>
+					</div>
+					
+					<div class="mb-3 row">
+						<label class="col-sm-2 col-form-label" for="descripcion" th:text="'Descripción'"></label>
+						<div class="col-sm-6">
+							<input type="text" th:field="*{descripcion}" class="form-control" th:errorclass="'form-control is-invalid'"/>
+							<div class="invalid-feedback" th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}"></div>
+						</div>
+					</div>
+					
+					<div class="mb-3 row">
+						<label class="col-sm-2 col-form-label" for="observacion" th:text="'Observación'"></label>
+						<div class="col-sm-6">
+							<textarea class="form-control" th:field="*{observacion}"></textarea>
+						</div>
+					</div>
+					
+					<div class="mb-3 row">
+						<label class="col-sm-2 col-form-label" for="buscar_producto" th:text="'Buscar producto'"></label>
+						<div class="col-sm-6">
+							<input type="text" class="form-control" th:id="buscar_producto" th:name="buscar_producto"/>
+						</div>						
+					</div>
+
+					<div class="mb-3 row mt-4">
+						<div class="col-sm-6">
+							<input type="submit" th:value="${btn_accion}" class="btn btn-outline-secondary"/>
+						</div>
+					</div>
+			
+				</form>				
+
+			</div>
+		</div>	
+	</div>
+	<footer th:replace="~{fragmentos/principal :: footer}"></footer>
+	<script th:replace="~{fragmentos/autocompleta_producto :: script}"></script>
+</body>
+</html>
